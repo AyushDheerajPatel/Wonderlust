@@ -33,10 +33,6 @@ main().then(() => {
 async function main() {
   await mongoose.connect(dbUrl);
 }
-// Home page route
-app.get("/", (req, res) => {
-  res.render("home");
-});
 // --- Middleware ---
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
@@ -89,6 +85,10 @@ app.use((req, res, next) => {
 });
 
 // --- Routes ---
+// Home page route
+app.get("/", (req, res) => {
+  res.render("home");
+});
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
