@@ -22,7 +22,7 @@ const userRouter = require("./routes/user.js");
 
 // --- MongoDB Connection ---
 const dbUrl = process.env.MONGO_URI; // FIXED: use consistent variable
-console.log('Mongo URI:', dbUrl);
+// console.log('Mongo URI:', dbUrl);
 
 main().then(() => {
   console.log("Connected to MongoDB");
@@ -86,6 +86,10 @@ app.use((req, res, next) => {
 });
 
 // --- Routes ---
+// --- Home Page Route (undo: redirect to /listings) ---
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
