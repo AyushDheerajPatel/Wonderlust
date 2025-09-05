@@ -1,0 +1,145 @@
+<% layout('layouts/boilerplate') -%>
+
+<!-- <div class="container-fluid px-4"> -->
+    <!-- <h1>All Listings</h1> -->
+    <!-- Optional: Add new listing button if needed -->
+    <!--
+    <form method="get" action="/listings/new">
+            <button>Create New Listing</button>
+    </form>
+    -->
+    <style>
+        #filters {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        .filter{
+            text-align: center;
+            margin-top: 2rem;
+            margin-right: 2rem;
+            opacity: 0.7;
+        } 
+        .filter:hover{
+            opacity: 1;
+            cursor: pointer;
+        }
+        .filter p{
+            font-size: 0.8rem;
+        }
+        .tax-info{
+            display: none;
+        }
+        .tax-toggle{
+            border: 1px solid black;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            height: 3.25rem;
+            margin-left: 3rem;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+    <div id="filters">
+        <div class="filter">
+            <div><i class="fa-solid fa-fire"></i></div>
+            <p>Trending</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-bed"></i></div>
+            <p>Rooms</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-house"></i></div>
+            <p>Entire Homes</p>
+        </div>  
+        <div class="filter">
+            <div><i class="fa-solid fa-location-dot"></i></div>
+            <p>Nearby</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-star"></i></div>
+            <p>Top Rated</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-mountain-city"></i></div>
+            <p>Iconic Cities</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-tree"></i></div>
+            <p>Nature</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-fort-awesome"></i></div>
+            <p>Castles</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-campground"></i></div>
+            <p>Camping</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-person-swimming"></i></div>
+            <p>Arctic</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-cow"></i></div>
+            <p>Farming</p>
+        </div>
+        <!-- <div class="filter">
+            <div><i class="fa-solid fa-mountain"></i></div>
+            <p>Mountains</p>
+        </div>
+        <div class="filter">
+            <div><i class="fa-solid fa-bath"></i></div>
+            <p>Bathrooms</p>
+        </div> -->
+        <div class="tax-toggle">
+            <div class="form-check-reverse form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+        </div>
+        </div>
+    </div>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for (let listing of allListing) { %>
+        
+        <a href="/listings/<%= listing._id %>" class="listing-links col" style="text-decoration: none;">
+            <div class="card h-100 listing-card" style="min-height: 100%;">
+                <!-- Image (fallback to default if missing) -->
+                <img src="<%= listing.image?.url ||'https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60' %>" class="card-img-top" alt="Listing Image" style="height: 20rem; width: 20rem;">
+
+                <!-- Optional overlay -->
+                <div class="card-img-overlay">
+                    <!-- Add overlays or badges here if needed -->
+                </div>
+
+                <div class="card-body"> 
+                    <p class="card-text">
+                        <div><b><%= listing.title %></b></div>
+                        <div>Price: ₹ <%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %>/night <i class="tax-info">&nbsp;&nbsp;+18% GST</i></div>
+                        <div>Location: <%= listing.location || "Not specified" %></div>
+
+                    </p>
+                </div>
+            </div>
+        </a>
+
+    <% } %>
+    </div>
+<!-- </div> -->
+ <script>
+    let taxSwitch = document.getElementById("switchCheckDefault");
+    taxSwitch.addEventListener("click", ()=>{
+        let taxInfo = document.getElementsByClassName("tax-info");
+        for(let i=0; i<taxInfo.length; i++){  
+         console.log(taxSwitch.checked);
+        if (taxSwitch.checked) {
+            taxInfo[i].style.display = "inline";
+        } else {
+            // Code to hide total after taxes
+            taxInfo[i].style.display = "none";
+        }
+    }
+});
+ </script>
